@@ -1,61 +1,203 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+TradeMate – Backend (Laravel)
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+A smart job-matching platform connecting Homeowners with skilled Trade Professionals such as plumbers, electricians, decorators, scaffolders, and more.
+TradeMate streamlines job posting, service hiring, and skill-based job hunting with secure authentication, subscription rules, and role-based permissions.
 
-## About Laravel
+✅ Key Features
+👤 User Roles
+Role	Description
+Super Admin	Complete system control, approve trade workers, manage roles & permissions, subscription plans, categories, jobs
+Homeowner	Register/Login, create profile, post jobs, manage bookings
+Trade Person	Register/Login, choose profession, subscribe to apply for jobs, receive job alerts & apply
+🎯 Core Functionalities
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+Role-based authentication (Super Admin / Homeowner / Trade Person)
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+Job Posting by Homeowners
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+Job Apply System
 
-## Learning Laravel
+Trade Person must select/activate a subscription plan before applying
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+Applications require Super Admin approval
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+Category-based Job Notifications
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+Subscription system
 
-## Laravel Sponsors
+Profile Management
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+Contact Us & About Us
 
-### Premium Partners
+Admin Panel with Roles & Permissions (Spatie)
 
-- **[Vehikl](https://vehikl.com)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Redberry](https://redberry.international/laravel-development)**
-- **[Active Logic](https://activelogic.com)**
+🛠️ Tech Stack
+Category	Tools
+Backend Framework	Laravel
+Authentication	Laravel Breeze / Sanctum / Passport (your choice)
+Authorization	Spatie Roles & Permissions
+Database	MySQL / PostgreSQL
+API Format	REST JSON APIs
+Deployment	Linux / Nginx / Apache / Docker (future)
+📦 Installation & Setup
+1️⃣ Clone the repository
+git clone https://github.com/yourusername/trademate-backend.git
+cd trademate-backend
 
-## Contributing
+2️⃣ Install dependencies
+composer install
+npm install
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+3️⃣ Environment Setup
+cp .env.example .env
+php artisan key:generate
 
-## Code of Conduct
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+Configure DB credentials inside .env
 
-## Security Vulnerabilities
+4️⃣ Migrate & Seed
+php artisan migrate --seed
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+5️⃣ Storage Link
+php artisan storage:link
 
-## License
+6️⃣ Run server
+php artisan serve
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+🔐 Authentication & User Roles
+Default Role Creation:
+
+Super Admin
+
+Trade Person
+
+Homeowner
+
+Permissions Included:
+
+User management
+
+Job management
+
+Category & Subscription management
+
+Access control & approvals
+
+🚀 API Modules
+Module	Endpoints
+Auth	Register, Login, Logout
+Profile	View & Update profile
+Jobs	Post, View, Apply, Approve
+Subscription	Plans, Purchase
+Notifications	Category-based alerts
+Contact	Submit contact request
+CMS	About Us, Policy, Terms
+📂 Folder Structure
+app/
+ ├── Http/
+ │   ├── Controllers/
+ │   ├── Middleware/
+ │   └── Requests/
+ ├── Models/
+ └── Services/
+database/
+routes/
+resources/
+
+💼 Future Enhancements
+
+Push Notifications (Firebase / OneSignal)
+
+Stripe/PayPal subscription billing
+
+Realtime chat between Homeowner & Tradesperson
+
+Review & rating system
+
+Mobile App API support
+
+🤝 Contribution Guide
+
+Follow PSR-12 coding standards
+
+Use feature branches & PR workflow
+
+Respect migration & API versioning
+
+🔗 ER Diagram
+
+Users
+ ├── id
+ ├── name
+ ├── email
+ ├── password
+ ├── role (homeowner/tradeperson)
+ └── profile fields
+
+Roles (Spatie)
+Permissions (Spatie)
+Role_has_permissions (Spatie)
+Model_has_roles (Spatie)
+
+Categories
+ ├── id
+ └── name
+
+Jobs
+ ├── id
+ ├── user_id (homeowner)
+ ├── category_id
+ ├── title
+ ├── description
+ ├── budget
+ └── status (open/closed)
+
+JobApplications
+ ├── id
+ ├── job_id
+ ├── tradeperson_id
+ └── status (pending/approved/rejected)
+
+SubscriptionPlans
+ ├── id
+ ├── name
+ ├── price
+ └── duration_days
+
+UserSubscriptions
+ ├── id
+ ├── user_id
+ ├── plan_id
+ ├── start_date
+ └── end_date
+
+ContactMessages
+ ├── id
+ ├── name
+ ├── email
+ ├── message
+
+AboutUs
+ ├── id
+ └── description
+
+
+🛡️ Security Best Practices
+
+.env not committed
+
+CSRF protection enabled
+
+SQL injection & XSS safe validation
+
+Role & permission middleware on every protected route
+
+📄 License
+
+This project is licensed under the MIT License.
+
+🙋 Need Help?
+
+If you face any issue, feel free to contact the maintainers or open a GitHub issue.
+
+⭐ If you like this project, please star the repo!

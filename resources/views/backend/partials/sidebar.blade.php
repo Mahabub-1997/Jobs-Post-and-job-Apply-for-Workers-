@@ -118,7 +118,7 @@
                         'categories.index',
                         'questions.index',
                         'question-options.index',
-//                        'jobs.index',
+                        'job_posts.index',
                     ];
 
                     // Check if current route matches any Job Post route
@@ -145,8 +145,8 @@
                                     ['route' => 'questions.index', 'icon' => 'far fa-circle', 'label' => 'Category Questions'],
 
                                     ['route' => 'question-options.index', 'icon' => 'far fa-circle', 'label' => 'Category Options'],
-//                                    ['route' => '', 'icon' => 'far fa-circle', 'label' => 'Post Jobs'],
-////                                    jobs.index
+                                    ['route' => 'job_posts.index', 'icon' => 'far fa-circle', 'label' => 'Post Jobs'],
+
                                 ];
                             @endphp
 

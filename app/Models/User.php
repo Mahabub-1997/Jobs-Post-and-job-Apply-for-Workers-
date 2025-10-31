@@ -59,4 +59,10 @@ class User extends Authenticatable implements JWTSubject
     {
         return [];
     }
+
+    // Relationship to HomeOwner have many JobPost
+    public function jobPosts()
+    {
+        return $this->hasMany(JobPost::class);
+    }
 }

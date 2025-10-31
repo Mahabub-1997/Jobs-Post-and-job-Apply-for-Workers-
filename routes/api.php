@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\API\JobPostApi\JobPostApiController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\API\Auth\AuthController;
@@ -69,6 +70,10 @@ Route::post('about-us-choose-us', [AboutUsChooseUsController::class, 'store']);
 // Testimonials
 Route::get('about-us-testimonials', [AboutUsTestimonialController::class, 'index']);
 Route::post('about-us-testimonials', [AboutUsTestimonialController::class, 'store']);
+
+
+Route::get('/job-posts', [JobPostApiController::class, 'apiIndex']);
+Route::get('/job-posts/{id}', [JobPostApiController::class, 'apiShow']);
 
 /** ----------------- Test / User Info ----------------- */
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {

@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Web\Category\CategoryController;
+use App\Http\Controllers\Web\JobPost\JobPostController;
 use App\Http\Controllers\Web\Question\QuestionController;
 use App\Http\Controllers\Web\QuestionOptions\QuestionOptionController;
 use Illuminate\Support\Facades\Route;
@@ -68,6 +69,8 @@ Route::middleware('auth')->group(function () {
         Route::resource('questions', QuestionController::class);
         /** ----- Question Options CRUD ----- */
         Route::resource('question-options', QuestionOptionController::class);
+        /** ----- job_posts  CRUD ----- */
+        Route::resource('job_posts', JobPostController::class);
 });
 
 /** ----------------- Authentication Routes ----------------- */

@@ -61,5 +61,11 @@ class Category extends Model
     {
         return $this->hasMany(Question::class);
     }
+    // Relationship to JobPost
+    public function jobPosts()
+    {
+        return $this->hasMany(JobPost::class);
+    }
+
 
 }

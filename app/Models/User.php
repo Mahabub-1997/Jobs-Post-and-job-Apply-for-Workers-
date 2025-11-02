@@ -65,4 +65,16 @@ class User extends Authenticatable implements JWTSubject
     {
         return $this->hasMany(JobPost::class);
     }
+    // Relationship to trade applications
+    public function tradeApplications()
+    {
+        return $this->hasMany(TradeApplication::class);
+    }
+
+    // Relationship to trade applications
+    public function categories()
+    {
+        return $this->belongsToMany(Category::class, 'trade_applications', 'user_id', 'category_id')
+            ->withTimestamps();
+    }
 }

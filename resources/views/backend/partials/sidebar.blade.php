@@ -163,6 +163,50 @@
                     </li>
                 @endhasanyrole
 
+                <!-- =================== Job Apply =================== -->
+                @php
+                    // Define the routes for Job Apply submenu
+                    $jobApplyRoutes = [
+                        'job-apply.index',
+                    ];
+
+                    // Check if current route matches any Job Apply route
+                    $jobApplyOpen = collect($jobApplyRoutes)
+                                    ->contains(fn($r) => request()->routeIs($r) || request()->is("admin/{$r}/*"));
+                @endphp
+
+                {{-- Only show menu to admin and TradePerson --}}
+
+                @hasanyrole('admin|tradesperson')
+                <li class="nav-item {{ $jobApplyOpen ? 'menu-open' : '' }}">
+                    <a href="#" class="nav-link {{ $jobApplyOpen ? 'active' : '' }}">
+                        <i class="nav-icon fas fa-user-check"></i>
+                        <p>
+                            Job Apply
+                            <i class="right fas fa-angle-left"></i>
+                        </p>
+                    </a>
+
+                    <ul class="nav nav-treeview">
+                        @php
+                            $subMenuJobApply = [
+                                ['route' => 'job-apply.index', 'icon' => 'far fa-circle', 'label' => 'JobApply'],
+                            ];
+                        @endphp
+
+                        @foreach($subMenuJobApply as $item)
+                            <li class="nav-item">
+                                <a href="{{ route($item['route']) }}"
+                                   class="nav-link {{ request()->routeIs($item['route']) ? 'active' : '' }}">
+                                    <i class="{{ $item['icon'] }} nav-icon"></i>
+                                    <p>{{ $item['label'] }}</p>
+                                </a>
+                            </li>
+                        @endforeach
+                    </ul>
+                </li>
+                @endhasanyrole
+
 
 
                 <!-- =================== Enrollment Register =================== -->

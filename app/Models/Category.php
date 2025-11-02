@@ -68,4 +68,18 @@ class Category extends Model
     }
 
 
+    //  Relationship to trade applications
+    public function tradeApplications()
+    {
+        return $this->hasMany(TradeApplication::class);
+    }
+
+    //  Relationship to trade applications
+    public function users()
+    {
+        return $this->belongsToMany(User::class, 'trade_applications', 'category_id', 'user_id')
+            ->withTimestamps();
+    }
+
+
 }

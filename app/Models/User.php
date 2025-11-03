@@ -77,4 +77,9 @@ class User extends Authenticatable implements JWTSubject
         return $this->belongsToMany(Category::class, 'trade_applications', 'user_id', 'category_id')
             ->withTimestamps();
     }
+    // Relationship to review
+    public function reviews()
+    {
+        return $this->hasMany(Review::class);
+    }
 }

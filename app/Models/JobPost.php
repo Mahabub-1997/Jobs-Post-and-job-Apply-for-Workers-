@@ -40,4 +40,9 @@ class JobPost extends Model
     {
         return $this->belongsTo(Category::class);
     }
+    /** Relation with review */
+    public function reviews()
+    {
+        return $this->hasMany(Review::class);
+    }
 }

@@ -31,7 +31,7 @@
                 @php
                     $cmsRoutes = [
                         'contact.index',
-                        'contact.show','web-contact-images.index','permissions.index','roles.index'
+                        'contact.show','web-contact-images.index','permissions.index','roles.index','terms.index','privacy.index'
                     ];
 
                     $cmsOpen = collect($cmsRoutes)->contains(fn($r) => request()->routeIs($r) || request()->is("admin/{$r}/*"));
@@ -51,6 +51,8 @@
                             $subMenu = [
                                 ['route' => 'contact.index', 'icon' => 'far fa-circle', 'label' => 'Contact Us'],
                                 ['route' => 'web-contact-images.index', 'icon' => 'far fa-circle', 'label' => 'ContactUs Image'],
+                                ['route' => 'terms.index', 'icon' => 'far fa-circle', 'label' => 'Terms And Conditions'],
+                                ['route' => 'privacy.index', 'icon' => 'far fa-circle', 'label' => 'Privacy And Policy'],
                             ];
                         @endphp
 

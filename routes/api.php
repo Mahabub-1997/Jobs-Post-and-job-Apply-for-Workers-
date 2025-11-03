@@ -2,7 +2,10 @@
 
 use App\Http\Controllers\API\JobApplyApi\TradeApplicationController;
 use App\Http\Controllers\API\JobPostApi\JobPostApiController;
+use App\Http\Controllers\API\JobReviewtApi\ReviewController;
+use App\Http\Controllers\API\PrivacyApi\PrivacyPolicyApiController;
 use App\Http\Controllers\API\Subscription\SubscriptionController;
+use App\Http\Controllers\API\TermApi\TermApiController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\API\Auth\AuthController;
@@ -94,4 +97,16 @@ use App\Http\Controllers\API\CMS\AboutUs\AboutUsValue\AboutUsValueController;
     Route::post('/trade-applications', [TradeApplicationController::class, 'store']);
 
 });
+/** ----------------- JobPost, User post Review ----------------- */
+    Route::middleware('auth:api')->group(function () {
+    Route::post('job-posts/{id}/review', [ReviewController::class, 'addReview']);
+    Route::get('job-posts/{id}/reviews', [ReviewController::class, 'listReviews']);
+    });
+/** ----------------- Terms and Conditions Api ----------------- */
+    Route::get('/terms', [TermApiController::class, 'index']);
+    Route::get('/terms/{id}', [TermApiController::class, 'show']);
+
+/** ----------------- Privacy and Policy  Api ----------------- */
+   Route::get('/privacy-policies', [PrivacyPolicyApiController::class, 'index']);
+   Route::get('/privacy-policies/{policy}', [PrivacyPolicyApiController::class, 'show']);
 

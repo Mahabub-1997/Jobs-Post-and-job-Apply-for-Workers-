@@ -1,6 +1,8 @@
 <?php
 
 use App\Http\Controllers\Web\Category\CategoryController;
+use App\Http\Controllers\Web\CMS\PrivacyPolicy\PrivacyPolicyController;
+use App\Http\Controllers\Web\CMS\TermsAndConditions\TermController;
 use App\Http\Controllers\Web\JobApply\JobApplyController;
 use App\Http\Controllers\Web\JobPost\JobPostController;
 use App\Http\Controllers\Web\Question\QuestionController;
@@ -28,6 +30,25 @@ use App\Http\Controllers\Web\Roles\RoleController;
 // Welcome Page
     Route::get('/', function () {
       return view('welcome');
+});
+/** ----------------- Terms and Conditions ----------------- */
+    Route::prefix('admin')->group(function () {
+    Route::get('/terms', [TermController::class, 'index'])->name('terms.index');
+    Route::get('/terms/create', [TermController::class, 'create'])->name('terms.create');
+    Route::get('/terms/{id}/edit', [TermController::class, 'edit'])->name('terms.edit');
+    Route::get('/terms/{id}', [TermController::class, 'show'])->name('terms.show');
+    Route::post('/terms', [TermController::class, 'store'])->name('terms.store');
+    Route::put('/terms/{id}', [TermController::class, 'update'])->name('terms.update');
+    Route::delete('/terms/{id}', [TermController::class, 'destroy'])->name('terms.destroy');
+});
+/** ----------------- Privacy and Policy  ----------------- */
+Route::prefix('admin')->group(function () {
+    Route::get('/privacy-policies', [PrivacyPolicyController::class, 'index'])->name('privacy.index');
+    Route::get('/privacy-policies/create', [PrivacyPolicyController::class, 'create'])->name('privacy.create');
+    Route::post('/privacy-policies', [PrivacyPolicyController::class, 'store'])->name('privacy.store');
+    Route::get('/privacy-policies/{id}/edit', [PrivacyPolicyController::class, 'edit'])->name('privacy.edit');
+    Route::put('/privacy-policies/{id}', [PrivacyPolicyController::class, 'update'])->name('privacy.update');
+    Route::delete('/privacy-policies/{id}', [PrivacyPolicyController::class, 'destroy'])->name('privacy.destroy');
 });
 
 // Contact Us Pages
@@ -84,6 +105,6 @@ use App\Http\Controllers\Web\Roles\RoleController;
 });
 
 /** ----------------- Authentication Routes ----------------- */
-require __DIR__.'/auth.php';
+         require __DIR__.'/auth.php';
 
 /** ----test ----- */

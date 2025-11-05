@@ -169,7 +169,7 @@
                 @php
                     // Define the routes for Job Apply submenu
                     $jobApplyRoutes = [
-                        'job-apply.index',
+                        'job-apply.index','job-registration.index'
                     ];
 
                     // Check if current route matches any Job Apply route
@@ -192,7 +192,8 @@
                     <ul class="nav nav-treeview">
                         @php
                             $subMenuJobApply = [
-                                ['route' => 'job-apply.index', 'icon' => 'far fa-circle', 'label' => 'JobApply'],
+                                ['route' => 'job-apply.index', 'icon' => 'far fa-circle', 'label' => 'Registrations'],
+                                ['route' => 'job-registration.index', 'icon' => 'far fa-circle', 'label' => 'JobApply'],
                             ];
                         @endphp
 
@@ -212,34 +213,16 @@
 
 
                 <!-- =================== Enrollment Register =================== -->
-                @role('tradesperson')
+                @role('admin')
                 <li class="nav-item">
-                    <a href=""
-                       class="nav-link {{ request()->routeIs('share.experiance.index') ? 'active' : '' }}">
+                    <a href="{{route('admin.job_applications.index')}}"
+                       class="nav-link {{ request()->routeIs('admin.job_applications.index') ? 'active' : '' }}">
                         <i class="nav-icon fas fa-users"></i>
-                        <p>User Management</p>
+                        <p> Applied User</p>
                     </a>
                 </li>
                 @endrole
-{{--                <!-- =================== Projects & Scenes=================== -->--}}
-{{--                <li class="nav-item">--}}
-{{--                    <a href=""--}}
-{{--                       --}}{{--                       {{route('backend.global_sponsors.index')}}--}}
-{{--                       class="nav-link {{ request()->routeIs('enrollments.index') ? 'active' : '' }}">--}}
-{{--                        <i class="nav-icon fas fa-clipboard-list"></i>--}}
-{{--                        <p>Projects & Scenes</p>--}}
-{{--                    </a>--}}
-{{--                </li>--}}
 
-{{--                <!-- =================== Sub-admin Roles=================== -->--}}
-{{--                <li class="nav-item">--}}
-{{--                    <a href=""--}}
-{{--                       --}}{{--                       {{route('backend.global_sponsors.index')}}--}}
-{{--                       class="nav-link {{ request()->routeIs('enrollments.index') ? 'active' : '' }}">--}}
-{{--                        <i class="nav-icon fas fa-user-cog"></i>--}}
-{{--                        <p>Sub-admin Roles</p>--}}
-{{--                    </a>--}}
-{{--                </li>--}}
                 <!-- =================== Notifications =================== -->
                 <li class="nav-item">
                     <a href=""
@@ -249,17 +232,6 @@
                         <p>Notifications</p>
                     </a>
                 </li>
-
-{{--                <!-- =================== Static Content =================== -->--}}
-{{--                <li class="nav-item">--}}
-{{--                    <a href=""--}}
-{{--                       --}}{{--                       {{route('backend.global_sponsors.index')}}--}}
-{{--                       class="nav-link {{ request()->routeIs('enrollments.index') ? 'active' : '' }}">--}}
-{{--                        <i class="nav-icon fas fa-file-alt"></i>--}}
-{{--                        <i class="nav-icon fas fa-file-alt"></i>--}}
-{{--                        <p>Static Content</p>--}}
-{{--                    </a>--}}
-{{--                </li>--}}
 
             </ul>
         </nav>

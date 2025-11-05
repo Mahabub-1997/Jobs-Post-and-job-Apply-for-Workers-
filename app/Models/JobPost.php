@@ -29,20 +29,36 @@ class JobPost extends Model
         'end_date' => 'date',
     ];
 
-    /** Relation with User */
+    /**
+     * Relation with User
+     */
     public function user()
     {
         return $this->belongsTo(User::class);
     }
 
-    /** Relation with Category */
+    /**
+     * Relation with Category
+     */
     public function category()
     {
         return $this->belongsTo(Category::class);
     }
-    /** Relation with review */
+
+    /**
+     * Relation with review
+     */
     public function reviews()
     {
         return $this->hasMany(Review::class);
+    }
+    /**
+     * Relation with applicants
+     */
+    public function applicants()
+    {
+        return $this->belongsToMany(User::class, 'job_applications', 'job_post_id', 'user_id')
+            ->withTimestamps();
+
     }
 }

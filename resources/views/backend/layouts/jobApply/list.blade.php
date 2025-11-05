@@ -6,7 +6,7 @@
         {{-- Page Header --}}
         <div class="content-header">
             <div class="container-fluid d-flex justify-content-between align-items-center">
-                <h1 class="m-0">Job Applications</h1>
+                <h1 class="m-0">TradePerson Registration</h1>
             </div>
         </div>
 

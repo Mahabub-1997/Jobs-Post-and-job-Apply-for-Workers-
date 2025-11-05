@@ -8,42 +8,46 @@ use App\Models\JobPost;
 use App\Models\Question;
 use App\Models\QuestionOption;
 use App\Models\User;
+use App\Notifications\NewJobPostNotification;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Notification;
 use Illuminate\Support\Facades\Storage;
 
 class JobPostController extends Controller
 {
     /**
-     * JobPost list
+     * Display a paginated list of JobPosts.
+     *
+     * @return \Illuminate\View\View
      */
     public function index()
     {
-        $jobPosts = JobPost::with('user', 'category')->paginate(10);
+        $jobPosts = JobPost::with(['user', 'category'])->paginate(10);
+
         return view('backend.layouts.jobsPost.jobPosts.list', compact('jobPosts'));
     }
 
     /**
-     * Create Form
+     * Show the form for creating a new JobPost.
+     *
+     * @param Request $request
+     * @return \Illuminate\View\View
      */
     public function create(Request $request)
     {
-//        $users = User::all();
-        $users = User::role(['admin','homeowner'])->get();
+        $users = User::role(['admin', 'homeowner'])->get();
         $categories = Category::all();
-
         $categoryId = $request->category ?? null;
 
         $questions = collect();
         $questionOptions = collect();
 
-        if($categoryId){
+        if ($categoryId) {
             $questions = Question::where('category_id', $categoryId)
-                ->with('options') // Question model-এ options relationship থাকতে হবে
+                ->with('options') // Ensure Question model has 'options' relationship
                 ->get();
 
-            $questionOptions = $questions->flatMap(function($q){
-                return $q->options;
-            });
+            $questionOptions = $questions->flatMap(fn($q) => $q->options);
         }
 
         return view('backend.layouts.jobsPost.jobPosts.add', compact(
@@ -56,7 +60,10 @@ class JobPostController extends Controller
     }
 
     /**
-     * JobPost Save
+     * Store a newly created JobPost in storage and notify tradepersons.
+     *
+     * @param Request $request
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function store(Request $request)
     {
@@ -74,40 +81,59 @@ class JobPostController extends Controller
 
         $data = $request->all();
 
-        // Image upload
-        if($request->hasFile('image')){
-            $data['image'] = $request->file('image')->store('job_images','public');
+        // Handle image upload
+        if ($request->hasFile('image')) {
+            $data['image'] = $request->file('image')->store('job_images', 'public');
         }
 
-        JobPost::create($data);
+        $jobPost = JobPost::create($data);
 
-        return redirect()->route('job_posts.index')->with('success', 'Job Post created successfully.');
+        // Notify all tradepersons
+        $tradepersons = User::role('tradesperson')->get();
+        if ($tradepersons->isNotEmpty()) {
+            Notification::send($tradepersons, new NewJobPostNotification($jobPost));
+        }
+
+        return redirect()
+            ->route('job_posts.index')
+            ->with('success', 'Job Post created successfully & notifications sent!');
     }
 
     /**
-     * JobPost Edit Form
+     * Show the form for editing a JobPost.
+     *
+     * @param int $id
+     * @param Request $request
+     * @return \Illuminate\View\View
      */
-    public function edit($id, Request $request)
+    public function edit(int $id, Request $request)
     {
         $jobPost = JobPost::findOrFail($id);
         $users = User::all();
         $categories = Category::all();
-
         $categoryId = $request->get('category') ?? $jobPost->category_id;
 
-        // Selected category অনুযায়ী Questions & Options
         $questions = Question::where('category_id', $categoryId)->get();
         $questionOptions = QuestionOption::whereIn('question_id', $questions->pluck('id'))->get();
 
         return view('backend.layouts.jobsPost.jobPosts.edit', compact(
-            'jobPost', 'users', 'categories', 'categoryId', 'questions', 'questionOptions'
+            'jobPost',
+            'users',
+            'categories',
+            'categoryId',
+            'questions',
+            'questionOptions'
         ));
     }
 
     /**
-     * Update JobPost
+     * Update the specified JobPost in storage.
+     *
+     * @param Request $request
+     * @param int $id
+     * @return \Illuminate\Http\RedirectResponse
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, int $id)
     {
         $jobPost = JobPost::findOrFail($id);
 
@@ -125,34 +151,38 @@ class JobPostController extends Controller
 
         $data = $request->all();
 
-        // Image upload
+        // Handle image update
         if ($request->hasFile('image')) {
-            // পুরানো image delete করা
             if ($jobPost->image && Storage::disk('public')->exists($jobPost->image)) {
                 Storage::disk('public')->delete($jobPost->image);
             }
-
             $data['image'] = $request->file('image')->store('job_images', 'public');
         }
 
         $jobPost->update($data);
 
-        return redirect()->route('job_posts.index')->with('success', 'Job Post updated successfully.');
+        return redirect()->route('job_posts.index')
+            ->with('success', 'Job Post updated successfully.');
     }
+
     /**
-     * Delete JobPost
+     * Remove the specified JobPost from storage.
+     *
+     * @param int $id
+     * @return \Illuminate\Http\RedirectResponse
      */
-    public function destroy($id)
+    public function destroy(int $id)
     {
         $jobPost = JobPost::findOrFail($id);
 
-        // Delete image from storage
+        // Delete image if exists
         if ($jobPost->image && Storage::disk('public')->exists($jobPost->image)) {
             Storage::disk('public')->delete($jobPost->image);
         }
 
         $jobPost->delete();
 
-        return redirect()->route('job_posts.index')->with('success', 'Job Post deleted successfully.');
+        return redirect()->route('job_posts.index')
+            ->with('success', 'Job Post deleted successfully.');
     }
 }

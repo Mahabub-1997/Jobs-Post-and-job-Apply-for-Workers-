@@ -60,26 +60,42 @@ class User extends Authenticatable implements JWTSubject
         return [];
     }
 
-    // Relationship to HomeOwner have many JobPost
+    /**
+     * Relation with jobPosts
+     */
     public function jobPosts()
     {
         return $this->hasMany(JobPost::class);
     }
-    // Relationship to trade applications
+    /**
+     * Relation with tradeApplications
+     */
     public function tradeApplications()
     {
         return $this->hasMany(TradeApplication::class);
     }
 
-    // Relationship to trade applications
+    /**
+     * Relation with categories
+     */
     public function categories()
     {
         return $this->belongsToMany(Category::class, 'trade_applications', 'user_id', 'category_id')
             ->withTimestamps();
     }
-    // Relationship to review
+    /**
+     * Relation with reviews
+     */
     public function reviews()
     {
         return $this->hasMany(Review::class);
+    }
+    /**
+     * Relation with appliedJobs
+     */
+    public function appliedJobs()
+    {
+        return $this->belongsToMany(JobPost::class, 'job_applications', 'user_id', 'job_post_id')
+            ->withTimestamps();
     }
 }

@@ -3,6 +3,7 @@
 use App\Http\Controllers\Web\Category\CategoryController;
 use App\Http\Controllers\Web\CMS\PrivacyPolicy\PrivacyPolicyController;
 use App\Http\Controllers\Web\CMS\TermsAndConditions\TermController;
+use App\Http\Controllers\Web\JobApplication\AdminJobApplicationController;
 use App\Http\Controllers\Web\JobApply\JobApplyController;
 use App\Http\Controllers\Web\JobPost\JobPostController;
 use App\Http\Controllers\Web\Question\QuestionController;
@@ -95,16 +96,31 @@ Route::prefix('admin')->group(function () {
         Route::resource('job_posts', JobPostController::class);
 });
 
-          /** ----------------- Job Apply list----------------- */
-        Route::middleware(['auth','role:admin|tradesperson'])->group(function() {
-        Route::get('/job-apply', [JobApplyController::class, 'index'])->name('job-apply.index');
+        /** ----------------- Job Apply list----------------- */
+            Route::middleware(['role:admin|tradesperson'])->group(function() {
+            Route::get('/job-registration', [JobApplyController::class, 'registration'])
+                ->name('job-registration.index');
+
+
+
+            Route::post('/job-registration/{id}/enroll', [JobApplyController::class, 'enroll'])
+                ->name('job_posts.enroll');
 });
+
            /** ----------------- Job Apply list----------------- */
-         Route::middleware(['auth','role:admin'])->group(function() {
-         Route::patch('/job-apply/{id}/status', [JobApplyController::class, 'updateStatus'])->name('job-apply.status');
+            Route::patch('/job-apply/{id}/status', [JobApplyController::class, 'updateStatus'])->name('job-apply.status');
+            Route::get('/job-apply', [JobApplyController::class, 'index'])->name('job-apply.index');
+
+
+
+            Route::middleware(['auth','role:admin'])->group(function() {
+            Route::get('/admin/job-applications', [AdminJobApplicationController::class, 'index'])
+            ->name('admin.job_applications.index');
+            Route::post('/admin/job-application/{id}/status', [AdminJobApplicationController::class, 'updateStatus'])
+            ->name('admin.job_applications.update_status');
 });
 
 /** ----------------- Authentication Routes ----------------- */
          require __DIR__.'/auth.php';
 
-/** ----test ----- */
+
